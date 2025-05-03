@@ -1,48 +1,51 @@
 from mylib.logistics import (
-    cities,
+    CITY_DATA,
     distance_between_points,
-    find_coordinates,
-    total_distance,
+  
 )
+
 import click
 
-# build a click group
 @click.group()
 def cli():
-    """ "
+    """
     A simple CLI for logistics calculations.
     """
+      # If you want to avoid W0107, remove this line
 
 
 @click.command("distance")
-@click.command("city1")
-@click.command("city2")
+@click.argument("city1")
+@click.argument("city2")
 def distance_between_cities(city1, city2):
     """
-    Calculate the distance between two cities.
-
-    Args:
-        city1 (str): The name of the first city.
-        city2 (str): The name of the second city.
-
-    Returns:
-        float: The distance between the two cities in kilometers.
+    Calculate the distance between two cities by their names.
     """
-    point1 = find_coordinates(city1)
-    point2 = find_coordinates(city2)
+    # Find the coordinates from CITY_DATA based on city names
+    city_lookup = {name: coords for name, coords in CITY_DATA}
+    if city1 not in city_lookup or city2 not in city_lookup:
+        click.echo("One or both city names are invalid.")
+        return
+
+    point1 = city_lookup[city1]
+    point2 = city_lookup[city2]
     distance = distance_between_points(point1, point2)
     click.echo(f"The distance between {city1} and {city2} is {distance:.2f} km.")
 
 
+@click.command("total-distance")
 def total_distance_cli():
     """
-    Calculate the total distance between all cities in the list.
-
-    Args:
-        cities (list): A list of tuples containing the name and coordinates of the cities.
-
-    Returns:
-        float: The total distance between all cities in kilometers.
+    Calculate the total distance between all cities in the CITY_DATA list.
     """
-    total_distance = total_distance(cities)
-    click.echo(f"The total distance between all cities is {total_distance:.2f} km.")
+    from mylib.logistics import total_distance
+    total = total_distance(CITY_DATA)
+    click.echo(f"The total distance between all cities is {total:.2f} km.")
+
+
+# Register commands
+cli.add_command(distance_between_cities)
+cli.add_command(total_distance_cli)
+
+if __name__ == "__main__":
+    cli()
