@@ -1,9 +1,11 @@
 import click
 from mylib import calc
 
+
 @click.group()
 def calcCLI():
     pass
+
 
 @calcCLI.command()
 @click.argument("a", type=float)
@@ -11,11 +13,13 @@ def calcCLI():
 def add(a, b):
     click.echo(calc.add(a, b))
 
+
 @calcCLI.command()
 @click.argument("a", type=float)
 @click.argument("b", type=float)
 def subtract(a, b):
     click.echo(calc.subtract(a, b))
+
 
 @calcCLI.command()
 @click.argument("a", type=float)
@@ -23,11 +27,13 @@ def subtract(a, b):
 def multiply(a, b):
     click.echo(calc.multiply(a, b))
 
+
 @calcCLI.command()
 @click.argument("a", type=float)
 @click.argument("b", type=float)
 def divide(a, b):
     click.echo(calc.divide(a, b))
+
 
 @calcCLI.command()
 @click.argument("a", type=float)
