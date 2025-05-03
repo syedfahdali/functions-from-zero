@@ -18,5 +18,8 @@ jobs:
         run: make lint
       - name: format code
         run: make format
+      - name: test my code
+        run: make test
+      
         
       
