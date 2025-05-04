@@ -1,17 +1,17 @@
 from mylib.logistics import (
     CITY_DATA,
     distance_between_points,
-  
 )
 
 import click
+
 
 @click.group()
 def cli():
     """
     A simple CLI for logistics calculations.
     """
-      # If you want to avoid W0107, remove this line
+    # If you want to avoid W0107, remove this line
 
 
 @click.command("distance")
@@ -39,6 +39,7 @@ def total_distance_cli():
     Calculate the total distance between all cities in the CITY_DATA list.
     """
     from mylib.logistics import total_distance
+
     total = total_distance(CITY_DATA)
     click.echo(f"The total distance between all cities is {total:.2f} km.")
 
